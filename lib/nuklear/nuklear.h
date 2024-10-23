@@ -4066,6 +4066,7 @@ struct nk_font_atlas {
 
 /* some language glyph codepoint ranges */
 NK_API const nk_rune *nk_font_default_glyph_ranges(void);
+NK_API const nk_rune *nk_font_awesome_glyph_ranges(void);
 NK_API const nk_rune *nk_font_chinese_glyph_ranges(void);
 NK_API const nk_rune *nk_font_cyrillic_glyph_ranges(void);
 NK_API const nk_rune *nk_font_korean_glyph_ranges(void);
@@ -16337,11 +16338,21 @@ nk_font_default_glyph_ranges(void)
 {
     NK_STORAGE const nk_rune ranges[] = {
         0x0020, 0x00FF, 
+        0
+    };
+    return ranges;
+}
+
+NK_API const nk_rune*
+nk_font_awesome_glyph_ranges(void)
+{
+    NK_STORAGE const nk_rune ranges[] = {
         0xE000, 0xF8FF,
         0
     };
     return ranges;
 }
+
 NK_API const nk_rune*
 nk_font_chinese_glyph_ranges(void)
 {
