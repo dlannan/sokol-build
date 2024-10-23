@@ -1,0 +1,121 @@
+name: "sokol-shared"
+
+on:
+  push:
+    branches:
+      - '*'
+
+jobs:
+    build-linux:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Install Dependencies
+          run: |
+            sudo apt update
+            sudo apt install -y libxrandr-dev \
+              libgles2-mesa-dev mesa-common-dev libgl1-mesa-dev mesa-vulkan-drivers \
+              libfreetype6-dev xorg-dev libxi-dev libx11-dev libasound2-dev \
+              nvidia-cg-dev glslang-dev spirv-tools spirv-headers
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 2
+        - name: Build sokol lib for Linux
+          run: |
+            ./build-sokol.sh linux
+        
+        - name: Archive results
+          uses: actions/upload-artifact@v4
+          with:
+            name: Linux sokol
+            path: |
+              ./bin/sokol_dll.so 
+              ./bin/sokol_debug_dll.so 
+              ./bin/sokol_shape_dll.so
+              ./bin/sokol_nuklear_dll.so
+              ./bin/hmm_dll.so
+              ./bin/remotery_dll.so
+              ./bin/stb_dll.so
+    build-windows:
+      runs-on: windows-latest
+      steps:
+        - uses: actions/checkout@v4
+        - uses: ilammy/msvc-dev-cmd@v1.4.1
+        - name: Build sokol lib for Win64
+          run: ./build-sokol.bat
+          shell: bash
+           
+        - name: Archive results
+          uses: actions/upload-artifact@v4
+          with:
+            name: Windows sokol
+            path: |
+              ./bin/sokol_dll.dll 
+              ./bin/sokol_debug_dll.dll
+              ./bin/sokol_shape_dll.dll
+              ./bin/sokol_nuklear_dll.dll
+              ./bin/hmm_dll.dll
+              ./bin/remotery_dll.dll
+              ./bin/stb_dll.dll
+    build-macos:
+      runs-on: macos-latest
+      steps:
+        - uses: actions/checkout@v4
+        - name: Build sokol lib for macos
+          run: ./build-sokol.sh macosx
+              
+        - name: Archive results
+          uses: actions/upload-artifact@v4
+          with:
+            name: macOS sokol
+            path: |
+              ./bin/sokol_dll_macos.so 
+              ./bin/sokol_debug_dll_macos.so 
+              ./bin/sokol_shape_dll_macos.so
+              ./bin/sokol_nuklear_dll_macos.so
+              ./bin/hmm_dll_macos.so
+              ./bin/remotery_dll_macos.so
+              ./bin/stb_dll_macos.so
+    build-ios64:
+      runs-on: macos-latest
+      steps:
+        - uses: actions/checkout@v4
+        - name: Build sokol lib for iosarm64
+          run: ./build-sokol.sh ios64
+              
+        - name: Archive results
+          uses: actions/upload-artifact@v4
+          with:
+            name: ios64 sokol
+            path: |
+              ./bin/sokol_dll_ios64.so 
+              ./bin/sokol_debug_dll_ios64.so 
+              ./bin/sokol_shape_dll_ios64.so
+              ./bin/sokol_nuklear_dll_ios64.so
+              ./bin/hmm_dll_ios64.so
+              ./bin/remotery_dll_ios64.so
+              ./bin/stb_dll_ios64.so
+    build-android:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - name: Fetch NDK
+          run: wget https://dl.google.com/android/repository/android-ndk-r25b-linux.zip
+        - name: Install arm compiler
+          run: unzip android-ndk-r25b-linux.zip
+        - name: Rename folder for generic ndk use
+          run: mv android-ndk-r25b android-ndk
+        - name: Build sokol lib for android
+          run: ./build-sokol.sh android
+              
+        - name: Archive results
+          uses: actions/upload-artifact@v4
+          with:
+            name: android sokol
+            path: |
+              ./bin/sokol_dll_aarch64.so   
+        - name: Archive armv7 results
+          uses: actions/upload-artifact@v4
+          with:
+            name: android sokol
+            path: |
+              ./bin/sokol_dll_armv7.so   
