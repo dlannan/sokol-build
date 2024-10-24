@@ -2259,7 +2259,7 @@ SOKOL_API_IMPL void snk_setup(const snk_desc_t* desc) {
     _snuklear.shd = sg_make_shader(&shd_desc);
 
     // pipeline object
-    _snuklear.pip = sg_make_pipeline(&(sg_pipeline_desc){
+    sg_pipeline_desc pip_desc = (sg_pipeline_desc){
         .layout = {
             .attrs = {
                 [0] = { .offset = offsetof(_snk_vertex_t, pos), .format=SG_VERTEXFORMAT_FLOAT2 },
@@ -2281,7 +2281,8 @@ SOKOL_API_IMPL void snk_setup(const snk_desc_t* desc) {
             }
         },
         .label = "sokol-nuklear-pipeline"
-    });
+    };
+    _snuklear.pip = sg_make_pipeline(&pip_desc);
 
     sg_pop_debug_group();
 }
@@ -2444,8 +2445,10 @@ SOKOL_API_IMPL void snk_render(int width, int height) {
     if (!vertex_buffer_overflow && !index_buffer_overflow) {
 
         // Setup rendering
-        sg_update_buffer(_snuklear.vbuf, &(sg_range){ nk_buffer_memory_const(&verts), nk_buffer_total(&verts) });
-        sg_update_buffer(_snuklear.ibuf, &(sg_range){ nk_buffer_memory_const(&idx), nk_buffer_total(&idx) });
+        sg_range vbuf_range = (sg_range){ nk_buffer_memory_const(&verts), nk_buffer_total(&verts) };
+        sg_update_buffer(_snuklear.vbuf, &vbuf_range);
+        sg_range ibuf_range = (sg_range){ nk_buffer_memory_const(&idx), nk_buffer_total(&idx) };
+        sg_update_buffer(_snuklear.ibuf, &ibuf_range);
         const float dpi_scale = _snuklear.desc.dpi_scale;
         const int fb_width = (int)(_snuklear.vs_params.disp_size[0] * dpi_scale);
         const int fb_height = (int)(_snuklear.vs_params.disp_size[1] * dpi_scale);
