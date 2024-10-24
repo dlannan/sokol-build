@@ -2094,38 +2094,42 @@ SOKOL_API_IMPL void snk_setup(const snk_desc_t* desc) {
 
     // vertex buffer
     _snuklear.vertex_buffer_size = (size_t)_snuklear.desc.max_vertices * sizeof(_snk_vertex_t);
-    _snuklear.vbuf = sg_make_buffer(&(sg_buffer_desc){
+    sg_buffer_desc buffer_desc = (sg_buffer_desc){
         .usage = SG_USAGE_STREAM,
         .size = _snuklear.vertex_buffer_size,
         .label = "sokol-nuklear-vertices"
-    });
+    };
+    _snuklear.vbuf = sg_make_buffer(&buffer_desc);
 
     // index buffer
     _snuklear.index_buffer_size = (size_t)_snuklear.desc.max_vertices * 3 * sizeof(uint16_t);
-    _snuklear.ibuf = sg_make_buffer(&(sg_buffer_desc){
+    sg_buffer_desc ibuffer_desc = (sg_buffer_desc){
         .type = SG_BUFFERTYPE_INDEXBUFFER,
         .usage = SG_USAGE_STREAM,
         .size = _snuklear.index_buffer_size,
         .label = "sokol-nuklear-indices"
-    });
+    };
+    _snuklear.ibuf = sg_make_buffer(&ibuffer_desc);
 
     // default font sampler
-    _snuklear.font_smp = sg_make_sampler(&(sg_sampler_desc){
+    sg_sampler_desc sampler_desc = (sg_sampler_desc){
         .min_filter = SG_FILTER_LINEAR,
         .mag_filter = SG_FILTER_LINEAR,
         .wrap_u = SG_WRAP_CLAMP_TO_EDGE,
         .wrap_v = SG_WRAP_CLAMP_TO_EDGE,
         .label = "sokol-nuklear-font-sampler",
-    });
+    };
+    _snuklear.font_smp = sg_make_sampler(&sampler_desc);
 
     // default user-image sampler
-    _snuklear.def_smp = sg_make_sampler(&(sg_sampler_desc){
+    sg_sampler_desc ui_sampler_desc = (sg_sampler_desc){
         .min_filter = SG_FILTER_NEAREST,
         .mag_filter = SG_FILTER_NEAREST,
         .wrap_u = SG_WRAP_CLAMP_TO_EDGE,
         .wrap_v = SG_WRAP_CLAMP_TO_EDGE,
         .label = "sokol-nuklear-default-sampler",
-    });
+    };
+    _snuklear.def_smp = sg_make_sampler(&ui_sampler_desc);
 
     // default font texture
     if (!_snuklear.desc.no_default_font) {
@@ -2134,7 +2138,8 @@ SOKOL_API_IMPL void snk_setup(const snk_desc_t* desc) {
         int font_width = 0, font_height = 0;
         const void* pixels = nk_font_atlas_bake(&_snuklear.atlas, &font_width, &font_height, NK_FONT_ATLAS_RGBA32);
         SOKOL_ASSERT((font_width > 0) && (font_height > 0));
-        _snuklear.font_img = sg_make_image(&(sg_image_desc){
+
+        sg_image_desc font_img_desc = (sg_image_desc){
             .width = font_width,
             .height = font_height,
             .pixel_format = SG_PIXELFORMAT_RGBA8,
@@ -2143,11 +2148,15 @@ SOKOL_API_IMPL void snk_setup(const snk_desc_t* desc) {
                 .size = (size_t)(font_width * font_height) * sizeof(uint32_t)
             },
             .label = "sokol-nuklear-font"
-        });
-        _snuklear.default_font = snk_make_image(&(snk_image_desc_t){
+        };
+        _snuklear.font_img = sg_make_image(&font_img_desc);
+
+        snk_image_desc_t snk_img_desc = (snk_image_desc_t){
             .image = _snuklear.font_img,
             .sampler = _snuklear.font_smp,
-        });
+        };
+        
+        _snuklear.default_font = snk_make_image(&snk_img_desc);
         nk_font_atlas_end(&_snuklear.atlas, snk_nkhandle(_snuklear.default_font), 0);
         nk_font_atlas_cleanup(&_snuklear.atlas);
         if (_snuklear.atlas.default_font) {
