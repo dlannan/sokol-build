@@ -2450,7 +2450,11 @@ SOKOL_API_IMPL void snk_render(int width, int height) {
         sg_apply_viewport(0, 0, fb_width, fb_height, true);
         sg_apply_scissor_rect(0, 0, fb_width, fb_height, true);
         sg_apply_pipeline(_snuklear.pip);
-        sg_apply_uniforms(SG_SHADERSTAGE_VS, 0, &SG_RANGE(_snuklear.vs_params));
+        sg_range render_range = (sg_range) {
+            .ptr = &_snuklear.vs_params,
+            .size = sizeof(_snuklear.vs_params)
+        };
+        sg_apply_uniforms(SG_SHADERSTAGE_VS, 0, &render_range);
 
         // Iterate through the command list, rendering each one
         const struct nk_draw_command* cmd = NULL;
