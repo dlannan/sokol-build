@@ -41,7 +41,7 @@
 #include "sokol_nuklear.h"
 
 nk_bool nk_tree_push(struct nk_context* ctx, enum nk_tree_type type, const char *title, enum nk_collapse_states initial_state) {
-    return nk_tree_push_hashed(ctx, type, title, initial_state, NK_FILE_LINE, nk_strlen(NK_FILE_LINE), (int)(UINT_PTR)title);
+    return nk_tree_push_hashed(ctx, type, title, initial_state, NK_FILE_LINE, nk_strlen(NK_FILE_LINE), (int)(uintptr_t)title);
 }
 
 nk_bool nk_tree_push_id(struct nk_context* ctx, enum nk_tree_type type, const char *title, enum nk_collapse_states initial_state, int seed) {
@@ -49,7 +49,7 @@ nk_bool nk_tree_push_id(struct nk_context* ctx, enum nk_tree_type type, const ch
 }
 
 nk_bool nk_tree_element_push(struct nk_context*ctx, enum nk_tree_type type, const char *title, enum nk_collapse_states initial_state, nk_bool *selected) {
-    return nk_tree_element_push_hashed(ctx, type, title, initial_state, selected, NK_FILE_LINE,nk_strlen(NK_FILE_LINE),(int)(UINT_PTR)title);
+    return nk_tree_element_push_hashed(ctx, type, title, initial_state, selected, NK_FILE_LINE,nk_strlen(NK_FILE_LINE),(int)(uintptr_t)title);
 }
 
 nk_bool nk_tree_element_push_id(struct nk_context*ctx, enum nk_tree_type type, const char *title, enum nk_collapse_states initial_state, nk_bool *selected, int seed) {
