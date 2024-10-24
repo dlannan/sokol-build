@@ -2155,7 +2155,7 @@ SOKOL_API_IMPL void snk_setup(const snk_desc_t* desc) {
             .image = _snuklear.font_img,
             .sampler = _snuklear.font_smp,
         };
-        
+
         _snuklear.default_font = snk_make_image(&snk_img_desc);
         nk_font_atlas_end(&_snuklear.atlas, snk_nkhandle(_snuklear.default_font), 0);
         nk_font_atlas_cleanup(&_snuklear.atlas);
@@ -2168,13 +2168,14 @@ SOKOL_API_IMPL void snk_setup(const snk_desc_t* desc) {
     // default user image
     static uint32_t def_pixels[64];
     memset(def_pixels, 0xFF, sizeof(def_pixels));
-    _snuklear.def_img = sg_make_image(&(sg_image_desc){
+    sg_image_desc user_img_desc = (sg_image_desc){
         .width = 8,
         .height = 8,
         .pixel_format = SG_PIXELFORMAT_RGBA8,
         .data.subimage[0][0] = SG_RANGE(def_pixels),
         .label = "sokol-nuklear-default-image",
-    });
+    };
+    _snuklear.def_img = sg_make_image(&user_img_desc);
 
     // shader
     #if defined SOKOL_METAL
