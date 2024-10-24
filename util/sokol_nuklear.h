@@ -2225,7 +2225,7 @@ SOKOL_API_IMPL void snk_setup(const snk_desc_t* desc) {
         vs_source = _snk_vs_source_dummy;
         fs_source = _snk_fs_source_dummy;
     #endif
-    _snuklear.shd = sg_make_shader(&(sg_shader_desc){
+    sg_shader_desc shd_desc = (sg_shader_desc){
         .attrs = {
             [0] = { .name = "position", .sem_name = "TEXCOORD", .sem_index = 0 },
             [1] = { .name = "texcoord0", .sem_name = "TEXCOORD", .sem_index = 1 },
@@ -2255,7 +2255,8 @@ SOKOL_API_IMPL void snk_setup(const snk_desc_t* desc) {
             .image_sampler_pairs[0] = { .used = true, .glsl_name = "tex_smp", .image_slot = 0, .sampler_slot = 0 },
         },
         .label = "sokol-nuklear-shader"
-    });
+    };
+    _snuklear.shd = sg_make_shader(&shd_desc);
 
     // pipeline object
     _snuklear.pip = sg_make_pipeline(&(sg_pipeline_desc){
