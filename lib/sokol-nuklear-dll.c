@@ -20,6 +20,9 @@
 #define NK_INCLUDE_STANDARD_VARARGS
 #define NK_IMPLEMENTATION
 
+// Needed for better vsnprintf - should work across compilers (might need tweaking).
+#define _ISOC99_SOURCE
+
 #if defined(__clang__)
 #pragma GCC diagnostic ignored "-Wunknown-warning-option"
 #pragma GCC diagnostic ignored "-Wunused-parameter"
