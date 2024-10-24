@@ -15,7 +15,7 @@ if [ "${PLATFORM}" = "linux" ]; then
     gcc -c ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-dll.c -o ./bin/sokol_dll.so ${COMPILE_FLAGS}
     gcc -c ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-debug-dll.c -o ./bin/sokol_debug_dll.so ${COMPILE_FLAGS}
     gcc -c ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-shape-dll.c -o ./bin/sokol_shape_dll.so ${COMPILE_FLAGS}
-    gcc -c -I../lib/nuklear ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-nuklear-dll.c -o ./bin/sokol_nuklear_dll.so ${COMPILE_FLAGS}
+    gcc -c -I./lib/nuklear ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-nuklear-dll.c -o ./bin/sokol_nuklear_dll.so ${COMPILE_FLAGS}
     # gcc -c ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-imgui-dll.c -o ./bin/sokol_imgui_dll.so ${COMPILE_FLAGS}
     gcc -c ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/hmm-dll.c -o ./bin/hmm_dll.so ${COMPILE_FLAGS}
     gcc -c ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} -DRMT_DLL lib/remotery/Remotery.c -o ./bin/remotery_dll.so ${COMPILE_FLAGS}
@@ -25,7 +25,7 @@ DEFS="-DTARGET_OS_IPHONE -D__APPLE__ -DSOKOL_GLCORE"
     g++ -c -xobjective-c++ ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-dll.c -o ./bin/sokol_dll_macos.so ${COMPILE_FLAGS}
     g++ -c -xobjective-c++ ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-debug-dll.c -o ./bin/sokol_debug_dll_macos.so ${COMPILE_FLAGS}
     g++ -c -xobjective-c++ ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-shape-dll.c -o ./bin/sokol_shape_dll_macos.so ${COMPILE_FLAGS}
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-nuklear-dll.c -o ./bin/sokol_nuklear_dll_macos.so ${COMPILE_FLAGS}
+    g++ -c -xobjective-c++ -I./lib/nuklear ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-nuklear-dll.c -o ./bin/sokol_nuklear_dll_macos.so ${COMPILE_FLAGS}
     # g++ -c -xobjective-c++ ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/sokol-imgui-dll.c -o ./bin/sokol_imgui_dll_macos.so ${COMPILE_FLAGS}
     g++ -c -xobjective-c++ ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} lib/hmm-dll.c -o ./bin/hmm_dll_macos.so ${COMPILE_FLAGS}
     g++ -c -xobjective-c++ ${BASE_INCLUDE} ${BASE_INLCUDE_LIB} ${DEFS} -DRMT_DLL lib/remotery/Remotery.c -o ./bin/remotery_dll_macos.so ${COMPILE_FLAGS}
