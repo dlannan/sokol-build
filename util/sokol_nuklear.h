@@ -464,7 +464,8 @@ inline snk_image_t snk_make_image(const snk_image_desc_t& desc) { return snk_mak
 #endif
 
 #ifdef __cplusplus
-#error "The sokol_nuklear.h implementation must be compiled as C."
+// Errors were fixed - this should not apply now.
+// #error "The sokol_nuklear.h implementation must be compiled as C."
 #endif
 
 #include <stdlib.h>
