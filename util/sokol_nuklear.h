@@ -2168,7 +2168,10 @@ SOKOL_API_IMPL void snk_setup(const snk_desc_t* desc) {
     // default user image
     static uint32_t def_pixels[64];
     memset(def_pixels, 0xFF, sizeof(def_pixels));
-    sg_range subimg_range = SG_RANGE(def_pixels);
+    sg_range subimg_range = (sg_range){
+        .ptr = &def_pixels,
+        .size = sizeof(def_pixels)
+    };
     sg_image_desc user_img_desc = (sg_image_desc){
         .width = 8,
         .height = 8,
