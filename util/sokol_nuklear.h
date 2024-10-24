@@ -2168,11 +2168,12 @@ SOKOL_API_IMPL void snk_setup(const snk_desc_t* desc) {
     // default user image
     static uint32_t def_pixels[64];
     memset(def_pixels, 0xFF, sizeof(def_pixels));
+    sg_range subimg_range = SG_RANGE(def_pixels);
     sg_image_desc user_img_desc = (sg_image_desc){
         .width = 8,
         .height = 8,
         .pixel_format = SG_PIXELFORMAT_RGBA8,
-        .data.subimage[0][0] = SG_RANGE(def_pixels),
+        .data.subimage[0][0] = subimg_range,
         .label = "sokol-nuklear-default-image",
     };
     _snuklear.def_img = sg_make_image(&user_img_desc);
