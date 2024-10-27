@@ -42,7 +42,7 @@ for arrayName in "${TARGET_FILES[@]}"; do
     if [ $arrayName == 'tgt06' ]
     then
     REMOTERY="./bin/Remotery.o"
-    gcc -c ${BASE_INCLUDE} $cmp ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
+    gcc -c ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
     fi
 
     gcc -c ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}.o ${COMPILE_FLAGS}
@@ -61,7 +61,7 @@ for arrayName in "${TARGET_FILES[@]}"; do
     if [ $arrayName == 'tgt06' ]
     then
     REMOTERY="./bin/Remotery_macos.o"
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} $cmp ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
     fi
 
     g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_macos.o ${COMPILE_FLAGS}
@@ -81,7 +81,7 @@ for arrayName in "${TARGET_FILES[@]}"; do
     if [ $arrayName == 'tgt06' ]
     then
     REMOTERY="./bin/Remotery_ios64.o"
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} $cmp ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
     fi
 
     g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_ios64.o ${COMPILE_FLAGS}
