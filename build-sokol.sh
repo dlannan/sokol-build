@@ -48,13 +48,15 @@ for arrayName in "${TARGET_FILES[@]}"; do
     gcc -c ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}.o ${COMPILE_FLAGS}
     gcc ${tgt[3]} ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}.so ./bin/lib${tgt[1]}.o ${REMOTERY} ${COMPILE_FLAGS}
 done
+
 # ----------------------------- BUILD MACOS ---------------------------------
 elif [ "${PLATFORM}" = "macosx" ]; then
 echo "MacOS."
 DEFS="-DTARGET_OS_IPHONE -D__APPLE__ -DSOKOL_GLCORE"
 COMPILE_FLAGS="$COMPILE_FLAGS -lGL -lpthread"
+declare -a index_arr=(tgt01 tgt02 tgt03 tgt04 tgt05 tgt06 tgt07)
 
-for arrayName in "${TARGET_FILES[@]}"; do
+for arrayName in "${index_arr[@]}"; do
     declare -n tgt="$arrayName"
 
     REMOTERY=
