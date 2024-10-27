@@ -3,6 +3,8 @@
 #include <signal.h>
 #include <stdio.h>
 
+#define RMT_USE_OPENGL      1
+#define RMT_DLL             1
 #define RMT_IMPL
 
 #include "remotery/Remotery.h"
@@ -33,7 +35,6 @@ RMT_API void * GetGlobalInstance() {
 
     return (void *)rmt_GetGlobalInstance();
 }
-
 
 #if defined(__cplusplus)
 }

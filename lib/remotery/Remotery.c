@@ -58,6 +58,7 @@
 */
 
 #define RMT_USE_OPENGL      1
+#define RMT_DLL             1
 #define RMT_IMPL
 #include "Remotery.h"
 
