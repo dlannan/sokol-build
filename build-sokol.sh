@@ -32,6 +32,7 @@ TARGET_FILES=('tgt01' 'tgt02' 'tgt03' 'tgt04' 'tgt05' 'tgt06' 'tgt07')
 # Simple build loops. 
 # ----------------------------- BUILD LINUX ---------------------------------
 if [ "${PLATFORM}" = "linux" ]; then
+echo "Linux."
 COMPILE_FLAGS="$COMPILE_FLAGS -lX11 -lXi -lXcursor -lGL -lpthread -lasound"
 
 for arrayName in "${TARGET_FILES[@]}"; do
@@ -49,12 +50,44 @@ for arrayName in "${TARGET_FILES[@]}"; do
 done
 # ----------------------------- BUILD MACOS ---------------------------------
 elif [ "${PLATFORM}" = "macosx" ]; then
-DEFS="-DTARGET_OS_IPHONE -D__APPLE__ -DSOKOL_GLCORE"
 echo "MacOS."
+DEFS="-DTARGET_OS_IPHONE -D__APPLE__ -DSOKOL_GLCORE"
+COMPILE_FLAGS="$COMPILE_FLAGS -lGL -lpthread"
+
+for arrayName in "${TARGET_FILES[@]}"; do
+    declare -n tgt="$arrayName"
+
+    REMOTERY=
+    if [ $arrayName == 'tgt06' ]
+    then
+    REMOTERY="./bin/Remotery_macos.o"
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} $cmp ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
+    fi
+
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_macos.o ${COMPILE_FLAGS}
+    g++ -xobjective-c++ ${tgt[3]} ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}_macos.so ./bin/lib${tgt[1]}_macos.o ${REMOTERY} ${COMPILE_FLAGS}
+done
+
 # ----------------------------- BUILD IOS64 ---------------------------------
 elif [ "${PLATFORM}" = "ios64" ]; then
-DEFS="-D__APPLE__ -DSOKOL_GLCORE"
 echo "IOS64."
+DEFS="-D__APPLE__ -DSOKOL_GLCORE"
+COMPILE_FLAGS="$COMPILE_FLAGS -lGL -lpthread"
+
+for arrayName in "${TARGET_FILES[@]}"; do
+    declare -n tgt="$arrayName"
+
+    REMOTERY=
+    if [ $arrayName == 'tgt06' ]
+    then
+    REMOTERY="./bin/Remotery_ios64.o"
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} $cmp ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
+    fi
+
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_ios64.o ${COMPILE_FLAGS}
+    g++ -xobjective-c++ ${tgt[3]} ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}_ios64.so ./bin/lib${tgt[1]}_ios64.o ${REMOTERY} ${COMPILE_FLAGS}
+done
+
 # ----------------------------- BUILD ANDROID ---------------------------------
 elif [ "${PLATFORM}" = "android" ]; then
 echo "Android."
