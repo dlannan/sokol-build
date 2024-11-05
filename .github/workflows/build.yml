@@ -75,6 +75,25 @@ jobs:
               ./bin/hmm_dll_macos.so
               ./bin/remotery_dll_macos.so
               ./bin/stb_dll_macos.so
+    build-macos-arm64:
+      runs-on: macos-14
+      steps:
+        - uses: actions/checkout@v4
+        - name: Build sokol lib for macos arm64
+          run: ./build-sokol.sh macosx
+              
+        - name: Archive results
+          uses: actions/upload-artifact@v4
+          with:
+            name: macOS arm64 sokol
+            path: |
+              ./bin/sokol_dll_macos_arm64.so 
+              ./bin/sokol_debug_dll_macos_arm64.so 
+              ./bin/sokol_shape_dll_macos_arm64.so
+              ./bin/sokol_nuklear_dll_macos_arm64.so
+              ./bin/hmm_dll_maco_arm64.so
+              ./bin/remotery_dll_macos_arm64.so
+              ./bin/stb_dll_macosv.so
     build-ios64:
       runs-on: macos-latest
       steps:
