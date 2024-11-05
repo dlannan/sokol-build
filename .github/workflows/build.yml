@@ -80,7 +80,7 @@ jobs:
       steps:
         - uses: actions/checkout@v4
         - name: Build sokol lib for macos arm64
-          run: ./build-sokol.sh macosx
+          run: ./build-sokol.sh macos_arm64
               
         - name: Archive results
           uses: actions/upload-artifact@v4
