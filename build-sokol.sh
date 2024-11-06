@@ -57,7 +57,7 @@ COMPILE_FLAGS="$COMPILE_FLAGS -lGL -lpthread"
 declare -a index_arr=(tgt01 tgt02 tgt03 tgt04 tgt05 tgt06 tgt07)
 
 for arrayName in "${index_arr[@]}"; do
-    declare -n tgt="$arrayName"
+    tgt="$arrayName"
 
     REMOTERY=
     if [ $arrayName == 'tgt06' ]
@@ -78,12 +78,12 @@ COMPILE_FLAGS="$COMPILE_FLAGS -arch arm64 -lGL -lpthread"
 declare -a index_arr=(tgt01 tgt02 tgt03 tgt04 tgt05 tgt06 tgt07)
 
 for arrayName in "${index_arr[@]}"; do
-    declare -n tgt="$arrayName"
+    tgt="$arrayName"
 
     REMOTERY=
     if [ $arrayName == 'tgt06' ]
     then
-    REMOTERY="./bin/Remotery_macos.o"
+    REMOTERY="./bin/Remotery_macos_arm64.o"
     g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
     fi
 
@@ -98,7 +98,7 @@ DEFS="-DTARGET_OS_IPHONE -D__APPLE__ -DSOKOL_GLCORE"
 COMPILE_FLAGS="$COMPILE_FLAGS -lGL -lpthread"
 
 for arrayName in "${TARGET_FILES[@]}"; do
-    declare -n tgt="$arrayName"
+    tgt="$arrayName"
 
     REMOTERY=
     if [ $arrayName == 'tgt06' ]
