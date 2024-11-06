@@ -15,7 +15,7 @@ extern "C" {
 
 RMT_API void * CreateGlobalInstance() {
 
-    Remotery *rmt = malloc( sizeof(Remotery*) );
+    Remotery *rmt = (Remotery *)malloc( sizeof(Remotery*) );
     rmtError error;
     error = rmt_CreateGlobalInstance(&rmt);
     return rmt;
@@ -23,12 +23,12 @@ RMT_API void * CreateGlobalInstance() {
 
 RMT_API void DestroyGlobalInstance(void *rmt) {
 
-    rmt_DestroyGlobalInstance(rmt);
+    rmt_DestroyGlobalInstance((Remotery *)rmt);
 }
 
 RMT_API void SetGlobalInstance(void *rmt) {
 
-    rmt_SetGlobalInstance(rmt);
+    rmt_SetGlobalInstance((Remotery *)rmt);
 }
 
 RMT_API void * GetGlobalInstance() {
