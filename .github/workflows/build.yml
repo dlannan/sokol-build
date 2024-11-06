@@ -28,13 +28,13 @@ jobs:
           with:
             name: Linux sokol
             path: |
-              ./bin/sokol_dll.so 
-              ./bin/sokol_debug_dll.so 
-              ./bin/sokol_shape_dll.so
-              ./bin/sokol_nuklear_dll.so
-              ./bin/hmm_dll.so
-              ./bin/remotery_dll.so
-              ./bin/stb_dll.so
+              ./bin/libsokol_dll.so 
+              ./bin/libsokol_debug_dll.so 
+              ./bin/libsokol_shape_dll.so
+              ./bin/libsokol_nuklear_dll.so
+              ./bin/libhmm_dll.so
+              ./bin/libremotery_dll.so
+              ./bin/libstb_dll.so
     build-windows:
       runs-on: windows-latest
       steps:
@@ -68,13 +68,13 @@ jobs:
           with:
             name: macOS sokol
             path: |
-              ./bin/sokol_dll_macos.so 
-              ./bin/sokol_debug_dll_macos.so 
-              ./bin/sokol_shape_dll_macos.so
-              ./bin/sokol_nuklear_dll_macos.so
-              ./bin/hmm_dll_macos.so
-              ./bin/remotery_dll_macos.so
-              ./bin/stb_dll_macos.so
+              ./bin/libsokol_dll_macos.so 
+              ./bin/libsokol_debug_dll_macos.so 
+              ./bin/libsokol_shape_dll_macos.so
+              ./bin/libsokol_nuklear_dll_macos.so
+              ./bin/libhmm_dll_macos.so
+              ./bin/libremotery_dll_macos.so
+              ./bin/libstb_dll_macos.so
     build-macos-arm64:
       runs-on: macos-14
       steps:
@@ -87,13 +87,13 @@ jobs:
           with:
             name: macOS arm64 sokol
             path: |
-              ./bin/sokol_dll_macos_arm64.so 
-              ./bin/sokol_debug_dll_macos_arm64.so 
-              ./bin/sokol_shape_dll_macos_arm64.so
-              ./bin/sokol_nuklear_dll_macos_arm64.so
-              ./bin/hmm_dll_maco_arm64.so
-              ./bin/remotery_dll_macos_arm64.so
-              ./bin/stb_dll_macosv.so
+              ./bin/libsokol_dll_macos_arm64.so 
+              ./bin/libsokol_debug_dll_macos_arm64.so 
+              ./bin/libsokol_shape_dll_macos_arm64.so
+              ./bin/libsokol_nuklear_dll_macos_arm64.so
+              ./bin/libhmm_dll_maco_arm64.so
+              ./bin/libremotery_dll_macos_arm64.so
+              ./bin/libstb_dll_macosv.so
     build-ios64:
       runs-on: macos-latest
       steps:
@@ -106,13 +106,13 @@ jobs:
           with:
             name: ios64 sokol
             path: |
-              ./bin/sokol_dll_ios64.so 
-              ./bin/sokol_debug_dll_ios64.so 
-              ./bin/sokol_shape_dll_ios64.so
-              ./bin/sokol_nuklear_dll_ios64.so
-              ./bin/hmm_dll_ios64.so
-              ./bin/remotery_dll_ios64.so
-              ./bin/stb_dll_ios64.so
+              ./bin/libsokol_dll_ios64.so 
+              ./bin/libsokol_debug_dll_ios64.so 
+              ./bin/libsokol_shape_dll_ios64.so
+              ./bin/libsokol_nuklear_dll_ios64.so
+              ./bin/libhmm_dll_ios64.so
+              ./bin/libremotery_dll_ios64.so
+              ./bin/libstb_dll_ios64.so
     build-android:
       runs-on: ubuntu-latest
       steps:
