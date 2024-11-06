@@ -9,8 +9,8 @@
 PLATFORM=$1
 
 # Default compiler and linker settings
-BASE_INCLUDE="-I./ -I/usr/include -L/usr/include -I/usr/local/include -I./util"
-BASE_INLCUDE_LIB="-L/usr/local/include"
+BASE_INCLUDE="-I./ -I/usr/include -I/usr/local/include -I./util"
+BASE_INLCUDE_LIB="-L/usr/local/include -L/usr/include "
 
 COMPILE_FLAGS="-lpthread -ldl -lm"
 
@@ -27,7 +27,7 @@ tgt05=("hmm-dll" "hmm_dll" "-fpic" "-shared -rdynamic")
 tgt06=("remotery-dll" "remotery_dll" "-fpic" "-shared -rdynamic")
 tgt07=("stb-dll" "stb_dll" "-fpic" "-shared -rdynamic")
 
-TARGET_FILES=('tgt01' 'tgt02' 'tgt03' 'tgt04' 'tgt05' 'tgt06' 'tgt07')
+TARGET_FILES=(tgt01[@] tgt02[@] tgt03[@] tgt04[@] tgt05[@] tgt06[@] tgt07[@])
 
 # Simple build loops. 
 # ----------------------------- BUILD LINUX ---------------------------------
@@ -35,14 +35,16 @@ if [ "${PLATFORM}" = "linux" ]; then
 echo "Linux."
 COMPILE_FLAGS="$COMPILE_FLAGS -lX11 -lXi -lXcursor -lGL -lpthread -lasound"
 
-for arrayName in "${TARGET_FILES[@]}"; do
-    declare -n tgt="$arrayName"
+COUNT=${#TARGET_FILES[@]}
+for ((i=0; i<$COUNT; i++))
+do
+    declare -a tgt=(${!TARGET_FILES[i]})
 
     REMOTERY=
-    if [ $arrayName == 'tgt06' ]
+    if [ $i == 5 ]
     then
-    REMOTERY="./bin/Remotery.o"
-    gcc -c ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
+        REMOTERY="./bin/Remotery_linux.o"
+        gcc -c ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
     fi
 
     gcc -c ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}.o ${COMPILE_FLAGS}
@@ -53,62 +55,65 @@ done
 elif [ "${PLATFORM}" = "macosx" ]; then
 echo "MacOS."
 DEFS="-D__APPLE__ -DSOKOL_GLCORE"
-COMPILE_FLAGS="$COMPILE_FLAGS -lGL -lpthread"
-declare -a index_arr=(tgt01 tgt02 tgt03 tgt04 tgt05 tgt06 tgt07)
+COMPILE_FLAGS="-framework Cocoa -framework QuartzCore -framework AudioToolbox -framework OpenGL $COMPILE_FLAGS"
 
-for arrayName in "${index_arr[@]}"; do
-    tgt=${$arrayName}
-
+COUNT=${#TARGET_FILES[@]}
+for ((i=0; i<$COUNT; i++))
+do
+    declare -a tgt=(${!TARGET_FILES[i]})
+    
     REMOTERY=
-    if [ $arrayName == 'tgt06' ]
+    if [ $i == 5 ]
     then
-    REMOTERY="./bin/Remotery_macos.o"
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
+        REMOTERY="./bin/Remotery_macos.o"
+        g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY}
     fi
 
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_macos.o ${COMPILE_FLAGS}
-    g++ -xobjective-c++ ${tgt[3]} ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}_macos.so ./bin/lib${tgt[1]}_macos.o ${REMOTERY} ${COMPILE_FLAGS}
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_macos.o
+    g++ -dynamiclib ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}_macos.so ./bin/lib${tgt[1]}_macos.o ${REMOTERY} ${COMPILE_FLAGS}
 done
 
 # ----------------------------- BUILD MACOS ARM64 ---------------------------------
 elif [ "${PLATFORM}" = "macos_arm64" ]; then
 echo "MacOS Arm64"
 DEFS="-D__APPLE__ -D__APPLE__ -DSOKOL_GLCORE"
-COMPILE_FLAGS="$COMPILE_FLAGS -arch arm64 -lGL -lpthread"
-declare -a index_arr=(tgt01 tgt02 tgt03 tgt04 tgt05 tgt06 tgt07)
+COMPILE_FLAGS="-arch arm64 -framework Cocoa -framework QuartzCore -framework AudioToolbox -framework OpenGL $COMPILE_FLAGS"
 
-for arrayName in "${index_arr[@]}"; do
-    tgt="$arrayName"
+COUNT=${#TARGET_FILES[@]}
+for ((i=0; i<$COUNT; i++))
+do
+    declare -a tgt=(${!TARGET_FILES[i]})
 
     REMOTERY=
-    if [ $arrayName == 'tgt06' ]
+    if [ $i == 5 ]
     then
     REMOTERY="./bin/Remotery_macos_arm64.o"
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
+        g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY}
     fi
-
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_macos_arm64.o ${COMPILE_FLAGS}
-    g++ -xobjective-c++ ${tgt[3]} ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}_macos_arm64.so ./bin/lib${tgt[1]}_macos_arm64.o ${REMOTERY} ${COMPILE_FLAGS}
+    echo g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_macos_arm64.o 
+    echo g++ -dynamiclib ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}_macos_arm64.so ./bin/lib${tgt[1]}_macos_arm64.o ${REMOTERY} ${COMPILE_FLAGS}
 done
 
 # ----------------------------- BUILD IOS64 ---------------------------------
 elif [ "${PLATFORM}" = "ios64" ]; then
 echo "IOS64."
 DEFS="-DTARGET_OS_IPHONE -D__APPLE__ -DSOKOL_GLCORE"
-COMPILE_FLAGS="$COMPILE_FLAGS -lGL -lpthread"
+COMPILE_FLAGS="-framework Cocoa -framework QuartzCore -framework AudioToolbox -framework OpenGL $COMPILE_FLAGS"
 
-for arrayName in "${TARGET_FILES[@]}"; do
-    tgt="$arrayName"
+COUNT=${#TARGET_FILES[@]}
+for ((i=0; i<$COUNT; i++))
+do
+    declare -a tgt=(${!TARGET_FILES[i]})
 
     REMOTERY=
-    if [ $arrayName == 'tgt06' ]
+    if [ $i == 5 ]
     then
     REMOTERY="./bin/Remotery_ios64.o"
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} 
     fi
 
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_ios64.o ${COMPILE_FLAGS}
-    g++ -xobjective-c++ ${tgt[3]} ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}_ios64.so ./bin/lib${tgt[1]}_ios64.o ${REMOTERY} ${COMPILE_FLAGS}
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_ios64.o 
+    g++ -dynamiclib ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}_ios64.so ./bin/lib${tgt[1]}_ios64.o ${REMOTERY} ${COMPILE_FLAGS}
 done
 
 # ----------------------------- BUILD ANDROID ---------------------------------
