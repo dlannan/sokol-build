@@ -91,7 +91,7 @@ jobs:
               ./bin/libsokol_debug_dll_macos_arm64.so 
               ./bin/libsokol_shape_dll_macos_arm64.so
               ./bin/libsokol_nuklear_dll_macos_arm64.so
-              ./bin/libhmm_dll_maco_arm64.so
+              ./bin/libhmm_dll_macos_arm64.so
               ./bin/libremotery_dll_macos_arm64.so
               ./bin/libstb_dll_macosv.so
     build-ios64:
