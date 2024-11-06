@@ -52,7 +52,7 @@ done
 # ----------------------------- BUILD MACOS ---------------------------------
 elif [ "${PLATFORM}" = "macosx" ]; then
 echo "MacOS."
-DEFS="-DTARGET_OS_IPHONE -D__APPLE__ -DSOKOL_GLCORE"
+DEFS="-D__APPLE__ -DSOKOL_GLCORE"
 COMPILE_FLAGS="$COMPILE_FLAGS -lGL -lpthread"
 declare -a index_arr=(tgt01 tgt02 tgt03 tgt04 tgt05 tgt06 tgt07)
 
@@ -73,8 +73,8 @@ done
 # ----------------------------- BUILD MACOS ARM64 ---------------------------------
 elif [ "${PLATFORM}" = "macos_arm64" ]; then
 echo "MacOS Arm64"
-DEFS="-DTARGET_???? -D__APPLE__ -DSOKOL_GLCORE"
-COMPILE_FLAGS="$COMPILE_FLAGS -lGL -lpthread"
+DEFS="-D__APPLE__ -D__APPLE__ -DSOKOL_GLCORE"
+COMPILE_FLAGS="$COMPILE_FLAGS -arch arm64 -lGL -lpthread"
 declare -a index_arr=(tgt01 tgt02 tgt03 tgt04 tgt05 tgt06 tgt07)
 
 for arrayName in "${index_arr[@]}"; do
@@ -94,7 +94,7 @@ done
 # ----------------------------- BUILD IOS64 ---------------------------------
 elif [ "${PLATFORM}" = "ios64" ]; then
 echo "IOS64."
-DEFS="-D__APPLE__ -DSOKOL_GLCORE"
+DEFS="-DTARGET_OS_IPHONE -D__APPLE__ -DSOKOL_GLCORE"
 COMPILE_FLAGS="$COMPILE_FLAGS -lGL -lpthread"
 
 for arrayName in "${TARGET_FILES[@]}"; do
