@@ -93,7 +93,7 @@ jobs:
               ./bin/libsokol_nuklear_dll_macos_arm64.so
               ./bin/libhmm_dll_macos_arm64.so
               ./bin/libremotery_dll_macos_arm64.so
-              ./bin/libstb_dll_macosv.so
+              ./bin/libstb_dll_macos_arm64.so
     build-ios64:
       runs-on: macos-latest
       steps:
