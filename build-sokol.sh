@@ -57,7 +57,7 @@ COMPILE_FLAGS="$COMPILE_FLAGS -lGL -lpthread"
 declare -a index_arr=(tgt01 tgt02 tgt03 tgt04 tgt05 tgt06 tgt07)
 
 for arrayName in "${index_arr[@]}"; do
-    tgt="$arrayName"
+    tgt=${$arrayName}
 
     REMOTERY=
     if [ $arrayName == 'tgt06' ]
