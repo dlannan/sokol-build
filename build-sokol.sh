@@ -55,7 +55,7 @@ done
 elif [ "${PLATFORM}" = "macosx" ]; then
 echo "MacOS."
 DEFS="-D__APPLE__ -DSOKOL_GLCORE"
-COMPILE_FLAGS="-framework Cocoa -framework QuartzCore -framework AudioToolbox -framework OpenGL $COMPILE_FLAGS"
+COMPILE_FLAGS="-arch x86_64 -framework Cocoa -framework QuartzCore -framework AudioToolbox -framework OpenGL $COMPILE_FLAGS"
 
 COUNT=${#TARGET_FILES[@]}
 for ((i=0; i<$COUNT; i++))
