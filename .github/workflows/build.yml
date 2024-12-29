@@ -53,7 +53,7 @@ jobs:
               ./bin/sokol_dll.dll 
               ./bin/sokol_debug_dll.dll
               ./bin/sokol_shape_dll.dll
-              ./bin/libsokol_gp_dll.dll
+              ./bin/sokol_gp_dll.dll
               ./bin/sokol_nuklear_dll.dll
               ./bin/hmm_dll.dll
               ./bin/remotery_dll.dll
