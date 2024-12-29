@@ -7,6 +7,7 @@ set DEFS=/DSOKOL_GLCORE /D_WIN32 /D_USRDLL /D_WINDLL /D_SLOG_WINDOWS
 call cl.exe %BASE_INCLUDE% %DEFS% /Fe:bin\sokol_dll.dll lib\sokol-dll.c %LINK_FLAGS%
 call cl.exe %BASE_INCLUDE% %DEFS% /Fe:bin\sokol_debug_dll.dll lib\sokol-debug-dll.c %LINK_FLAGS%
 call cl.exe %BASE_INCLUDE% %DEFS% /Fe:bin\sokol_shape_dll.dll lib\sokol-shape-dll.c %LINK_FLAGS%
+call cl.exe %BASE_INCLUDE% %DEFS% /Fe:bin\sokol_gp_dll.dll lib\sokol-gp-dll.c %LINK_FLAGS%
 
 @REM Nuklear is the preferred GUI option. Much cleaner, and C friendly
 call cl.exe /Ilib\nuklear %BASE_INCLUDE% %DEFS% /Fe:bin\sokol_nuklear_dll.dll lib\sokol-nuklear-dll.c %LINK_FLAGS%

@@ -26,8 +26,9 @@ tgt04=("sokol-nuklear-dll" "sokol_nuklear_dll" "-I./lib/nuklear -fpic" "-shared 
 tgt05=("hmm-dll" "hmm_dll" "-fpic" "-shared -rdynamic")
 tgt06=("remotery-dll" "remotery_dll" "-fpic" "-shared -rdynamic")
 tgt07=("stb-dll" "stb_dll" "-fpic" "-shared -rdynamic")
+tgt08=("sokol-gp-dll" "sokol_gp_dll" "-fpic" "-shared -rdynamic")
 
-TARGET_FILES=(tgt01[@] tgt02[@] tgt03[@] tgt04[@] tgt05[@] tgt06[@] tgt07[@])
+TARGET_FILES=(tgt01[@] tgt02[@] tgt03[@] tgt04[@] tgt05[@] tgt06[@] tgt07[@] tgt08[@])
 
 # Simple build loops. 
 # ----------------------------- BUILD LINUX ---------------------------------
