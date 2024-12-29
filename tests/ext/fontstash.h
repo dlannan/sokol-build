@@ -21,15 +21,24 @@
 #ifndef FONS_H
 #define FONS_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <stdio.h> // size_t
 
 // To make the implementation private to the file that generates the implementation
-#ifdef FONS_STATIC
-#define FONS_DEF static
+#if defined(SOKOL_API_DECL) && !defined(FONS_DEF_API)
+#define FONS_DEF_API SOKOL_API_DECL
+#endif
+#ifndef FONS_DEF_API
+#if defined(_WIN32) && defined(SOKOL_DLL) && defined(FONTSTASH_IMPLEMENTATION)
+#define FONS_DEF_API __declspec(dllexport)
+#elif defined(_WIN32) && defined(SOKOL_DLL)
+#define FONS_DEF_API __declspec(dllimport)
 #else
-#define FONS_DEF extern
+#define FONS_DEF_API extern
+#endif
+#endif
+
+#ifdef __cplusplus
+extern "C" {
 #endif
 
 #define FONS_INVALID -1
@@ -97,52 +106,54 @@ typedef struct FONStextIter FONStextIter;
 typedef struct FONScontext FONScontext;
 
 // Contructor and destructor.
-FONS_DEF FONScontext* fonsCreateInternal(FONSparams* params);
-FONS_DEF void fonsDeleteInternal(FONScontext* s);
+FONS_DEF_API FONScontext* fonsCreateInternal(FONSparams* params);
+FONS_DEF_API void fonsDeleteInternal(FONScontext* s);
 
-FONS_DEF void fonsSetErrorCallback(FONScontext* s, void (*callback)(void* uptr, int error, int val), void* uptr);
+FONS_DEF_API void fonsSetErrorCallback(FONScontext* s, void (*callback)(void* uptr, int error, int val), void* uptr);
 // Returns current atlas size.
-FONS_DEF void fonsGetAtlasSize(FONScontext* s, int* width, int* height);
-// Expands the atlas size.
-FONS_DEF int fonsExpandAtlas(FONScontext* s, int width, int height);
+FONS_DEF_API void fonsGetAtlasSize(FONScontext* s, int* width, int* height);
+// Expands the atlas size. 
+FONS_DEF_API int fonsExpandAtlas(FONScontext* s, int width, int height);
 // Resets the whole stash.
-FONS_DEF int fonsResetAtlas(FONScontext* stash, int width, int height);
+FONS_DEF_API int fonsResetAtlas(FONScontext* stash, int width, int height);
 
 // Add fonts
-FONS_DEF int fonsGetFontByName(FONScontext* s, const char* name);
-FONS_DEF int fonsAddFallbackFont(FONScontext* stash, int base, int fallback);
+FONS_DEF_API int fonsAddFont(FONScontext* s, const char* name, const char* path);
+FONS_DEF_API int fonsAddFontMem(FONScontext* s, const char* name, unsigned char* data, int ndata, int freeData);
+FONS_DEF_API int fonsGetFontByName(FONScontext* s, const char* name);
+FONS_DEF_API int fonsAddFallbackFont(FONScontext* stash, int base, int fallback);
 
 // State handling
-FONS_DEF void fonsPushState(FONScontext* s);
-FONS_DEF void fonsPopState(FONScontext* s);
-FONS_DEF void fonsClearState(FONScontext* s);
+FONS_DEF_API void fonsPushState(FONScontext* s);
+FONS_DEF_API void fonsPopState(FONScontext* s);
+FONS_DEF_API void fonsClearState(FONScontext* s);
 
 // State setting
-FONS_DEF void fonsSetSize(FONScontext* s, float size);
-FONS_DEF void fonsSetColor(FONScontext* s, unsigned int color);
-FONS_DEF void fonsSetSpacing(FONScontext* s, float spacing);
-FONS_DEF void fonsSetBlur(FONScontext* s, float blur);
-FONS_DEF void fonsSetAlign(FONScontext* s, int align);
-FONS_DEF void fonsSetFont(FONScontext* s, int font);
+FONS_DEF_API void fonsSetSize(FONScontext* s, float size);
+FONS_DEF_API void fonsSetColor(FONScontext* s, unsigned int color);
+FONS_DEF_API void fonsSetSpacing(FONScontext* s, float spacing);
+FONS_DEF_API void fonsSetBlur(FONScontext* s, float blur);
+FONS_DEF_API void fonsSetAlign(FONScontext* s, int align);
+FONS_DEF_API void fonsSetFont(FONScontext* s, int font);
 
 // Draw text
-FONS_DEF float fonsDrawText(FONScontext* s, float x, float y, const char* string, const char* end);
+FONS_DEF_API float fonsDrawText(FONScontext* s, float x, float y, const char* string, const char* end);
 
 // Measure text
-FONS_DEF float fonsTextBounds(FONScontext* s, float x, float y, const char* string, const char* end, float* bounds);
-FONS_DEF void fonsLineBounds(FONScontext* s, float y, float* miny, float* maxy);
-FONS_DEF void fonsVertMetrics(FONScontext* s, float* ascender, float* descender, float* lineh);
+FONS_DEF_API float fonsTextBounds(FONScontext* s, float x, float y, const char* string, const char* end, float* bounds);
+FONS_DEF_API void fonsLineBounds(FONScontext* s, float y, float* miny, float* maxy);
+FONS_DEF_API void fonsVertMetrics(FONScontext* s, float* ascender, float* descender, float* lineh);
 
 // Text iterator
-FONS_DEF int fonsTextIterInit(FONScontext* stash, FONStextIter* iter, float x, float y, const char* str, const char* end);
-FONS_DEF int fonsTextIterNext(FONScontext* stash, FONStextIter* iter, struct FONSquad* quad);
+FONS_DEF_API int fonsTextIterInit(FONScontext* stash, FONStextIter* iter, float x, float y, const char* str, const char* end);
+FONS_DEF_API int fonsTextIterNext(FONScontext* stash, FONStextIter* iter, struct FONSquad* quad);
 
 // Pull texture changes
-FONS_DEF const unsigned char* fonsGetTextureData(FONScontext* stash, int* width, int* height);
-FONS_DEF int fonsValidateTexture(FONScontext* s, int* dirty);
+FONS_DEF_API const unsigned char* fonsGetTextureData(FONScontext* stash, int* width, int* height);
+FONS_DEF_API int fonsValidateTexture(FONScontext* s, int* dirty);
 
 // Draws the stash texture for debugging
-FONS_DEF void fonsDrawDebug(FONScontext* s, float x, float y);
+FONS_DEF_API void fonsDrawDebug(FONScontext* s, float x, float y);
 
 #ifdef __cplusplus
 }
@@ -152,6 +163,10 @@ FONS_DEF void fonsDrawDebug(FONScontext* s, float x, float y);
 
 
 #ifdef FONTSTASH_IMPLEMENTATION
+
+#ifndef FONS_DEF 
+	#define FONS_DEF 
+#endif
 
 #define FONS_NOTUSED(v)  (void)sizeof(v)
 
@@ -887,6 +902,62 @@ error:
 	return FONS_INVALID;
 }
 
+static FILE* fons__fopen(const char* filename, const char* mode)
+{
+#ifdef _WIN32
+	int len = 0;
+	int fileLen = strlen(filename);
+	int modeLen = strlen(mode);
+	wchar_t wpath[MAX_PATH];
+	wchar_t wmode[MAX_PATH];
+	FILE* f;
+
+	if (fileLen == 0)
+		return NULL;
+	if (modeLen == 0)
+		return NULL;
+	len = MultiByteToWideChar(CP_UTF8, 0, filename, fileLen, wpath, fileLen);
+	if (len >= MAX_PATH)
+		return NULL;
+	wpath[len] = L'\0';
+	len = MultiByteToWideChar(CP_UTF8, 0, mode, modeLen, wmode, modeLen);
+	if (len >= MAX_PATH)
+		return NULL;
+	wmode[len] = L'\0';
+	f = _wfopen(wpath, wmode);
+	return f;
+#else
+	return fopen(filename, mode);
+#endif
+}
+
+int fonsAddFont(FONScontext* stash, const char* name, const char* path)
+{
+	FILE* fp = 0;
+	int dataSize = 0, readed;
+	unsigned char* data = NULL;
+
+	// Read in the font data.
+	fp = fons__fopen(path, "rb");
+	if (fp == NULL) goto error;
+	fseek(fp,0,SEEK_END);
+	dataSize = (int)ftell(fp);
+	fseek(fp,0,SEEK_SET);
+	data = (unsigned char*)malloc(dataSize);
+	if (data == NULL) goto error;
+	readed = fread(data, 1, dataSize, fp);
+	fclose(fp);
+	fp = 0;
+	if (readed != dataSize) goto error;
+
+	return fonsAddFontMem(stash, name, data, dataSize, 1);
+
+error:
+	if (data) free(data);
+	if (fp) fclose(fp);
+	return FONS_INVALID;
+}
+
 int fonsAddFontMem(FONScontext* stash, const char* name, unsigned char* data, int dataSize, int freeData)
 {
 	int i, ascent, descent, fh, lineGap;
@@ -1430,7 +1501,7 @@ FONS_DEF void fonsDrawDebug(FONScontext* stash, float x, float y)
 }
 
 FONS_DEF float fonsTextBounds(FONScontext* stash,
-					 float x, float y,
+					 float x, float y, 
 					 const char* str, const char* end,
 					 float* bounds)
 {
