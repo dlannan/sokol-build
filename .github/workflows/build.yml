@@ -31,6 +31,7 @@ jobs:
               ./bin/libsokol_dll.so 
               ./bin/libsokol_debug_dll.so 
               ./bin/libsokol_shape_dll.so
+              ./bin/libsokol_gp_dll.so
               ./bin/libsokol_nuklear_dll.so
               ./bin/libhmm_dll.so
               ./bin/libremotery_dll.so
@@ -52,6 +53,7 @@ jobs:
               ./bin/sokol_dll.dll 
               ./bin/sokol_debug_dll.dll
               ./bin/sokol_shape_dll.dll
+              ./bin/libsokol_gp_dll.dll
               ./bin/sokol_nuklear_dll.dll
               ./bin/hmm_dll.dll
               ./bin/remotery_dll.dll
@@ -71,6 +73,7 @@ jobs:
               ./bin/libsokol_dll_macos.so 
               ./bin/libsokol_debug_dll_macos.so 
               ./bin/libsokol_shape_dll_macos.so
+              ./bin/libsokol_gp_dll_macos.so
               ./bin/libsokol_nuklear_dll_macos.so
               ./bin/libhmm_dll_macos.so
               ./bin/libremotery_dll_macos.so
@@ -90,6 +93,7 @@ jobs:
               ./bin/libsokol_dll_macos_arm64.so 
               ./bin/libsokol_debug_dll_macos_arm64.so 
               ./bin/libsokol_shape_dll_macos_arm64.so
+              ./bin/libsokol_gp_dll_macos_arm64.so
               ./bin/libsokol_nuklear_dll_macos_arm64.so
               ./bin/libhmm_dll_macos_arm64.so
               ./bin/libremotery_dll_macos_arm64.so
@@ -109,6 +113,7 @@ jobs:
               ./bin/libsokol_dll_ios64.so 
               ./bin/libsokol_debug_dll_ios64.so 
               ./bin/libsokol_shape_dll_ios64.so
+              ./bin/libsokol_gp_dll_ios64.so
               ./bin/libsokol_nuklear_dll_ios64.so
               ./bin/libhmm_dll_ios64.so
               ./bin/libremotery_dll_ios64.so
