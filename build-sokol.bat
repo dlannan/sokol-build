@@ -26,5 +26,7 @@ call cl.exe /Ilib\remotery %BASE_INCLUDE% %DEFS% /DRMT_DLL /Fe:bin\remotery_dll.
 
 call cl.exe /Ilib/stb %BASE_INCLUDE% %DEFS% /Fe:bin\stb_dll.dll lib\stb-dll.c %LINK_FLAGS%
 
+call cl.exe /Ilib/ducktape %BASE_INCLUDE% %DEFS% /Fe:bin\ducktape_dll.dll lib\ducktape-dll.c %LINK_FLAGS%
+
 del *.obj
 del *.lib
