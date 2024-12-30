@@ -1670,8 +1670,8 @@ typedef struct sg_range {
 #pragma warning(disable:4204)   // VS2015: nonstandard extension used: non-constant aggregate initializer
 #endif
 #if defined(__cplusplus)
-#define SG_RANGE(x) sg_range{ &x, sizeof(x) }
-#define SG_RANGE_REF(x) sg_range{ &x, sizeof(x) }
+#define SG_RANGE(x) (sg_range){ &x, sizeof(x) }
+#define SG_RANGE_REF(x) (sg_range){ &x, sizeof(x) }
 #else
 #define SG_RANGE(x) (sg_range){ &x, sizeof(x) }
 #define SG_RANGE_REF(x) &(sg_range){ &x, sizeof(x) }

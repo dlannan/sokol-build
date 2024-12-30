@@ -9,7 +9,7 @@
 #include "sokol_gfx.h"
 
 #include "util/sokol_gl.h"
-#include "tests/ext/fontstash.h"
+#include "lib/fontstash/fontstash.h"
 #include "util/sokol_fontstash.h"
 #include "sokol_gp.h"
 
