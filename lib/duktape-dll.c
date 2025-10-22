@@ -195,7 +195,7 @@
 
 #define DUK_F_DLL_BUILD
 #define DUK_COMPILING_DUKTAPE
-#include "duktape.h"
+#include "duktape/duktape.h"
 
 /*
  *  Duktape includes (other than duk_features.h)
