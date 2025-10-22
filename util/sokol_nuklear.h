@@ -439,7 +439,7 @@ typedef struct snk_desc_t {
 } snk_desc_t;
 
 SOKOL_NUKLEAR_API_DECL void snk_setup(const snk_desc_t* desc);
-SOKOL_NUKLEAR_API_DECL struct nk_context* snk_new_frame(void);
+SOKOL_NUKLEAR_API_DECL struct nk_context* snk_new_frame(int clear);
 SOKOL_NUKLEAR_API_DECL void snk_render(int width, int height);
 SOKOL_NUKLEAR_API_DECL snk_image_t snk_make_image(const snk_image_desc_t* desc);
 SOKOL_NUKLEAR_API_DECL void snk_destroy_image(snk_image_t img);
@@ -2766,7 +2766,7 @@ SOKOL_API_IMPL void snk_shutdown(void) {
     _snuklear.init_cookie = 0;
 }
 
-SOKOL_API_IMPL struct nk_context* snk_new_frame(void) {
+SOKOL_API_IMPL struct nk_context* snk_new_frame(int clear) {
     SOKOL_ASSERT(_SNK_INIT_COOKIE == _snuklear.init_cookie);
     #if !defined(SOKOL_NUKLEAR_NO_SOKOL_APP)
     nk_input_begin(&_snuklear.ctx);
@@ -2807,7 +2807,7 @@ SOKOL_API_IMPL struct nk_context* snk_new_frame(void) {
     nk_input_end(&_snuklear.ctx);
     #endif
 
-    nk_clear(&_snuklear.ctx);
+    if(clear == 0) nk_clear(&_snuklear.ctx);
     return &_snuklear.ctx;
 }
 
