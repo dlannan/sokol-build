@@ -28,7 +28,7 @@ tgt06=("remotery-dll" "remotery_dll" "-fpic" "-shared -rdynamic")
 tgt07=("stb-dll" "stb_dll" "-fpic" "-shared -rdynamic")
 tgt08=("sokol-gp-dll" "sokol_gp_dll" "-fpic" "-shared -rdynamic")
 tgt09=("duktape-dll" "duktape_dll" "-fpic" "-shared -rdynamic")
-tgt10=("cgltf-dll" "stb_dll" "-fpic" "-shared -rdynamic")
+tgt10=("cgltf-dll" "cgltf_dll" "-fpic" "-shared -rdynamic")
 
 TARGET_FILES=(tgt01[@] tgt02[@] tgt03[@] tgt04[@] tgt05[@] tgt06[@] tgt07[@] tgt08[@] tgt09[@] tgt10[@])
 
