@@ -37,6 +37,7 @@ jobs:
               ./bin/libremotery_dll.so
               ./bin/libstb_dll.so
               ./bin/libduktape_dll.so
+              ./bin/libcgltf_dll.so
     build-windows:
       runs-on: windows-latest
       steps:
@@ -60,6 +61,7 @@ jobs:
               ./bin/remotery_dll.dll
               ./bin/stb_dll.dll
               ./bin/libduktape_dll.dll
+              ./bin/cgltf_dll.so
     build-macos:
       runs-on: macos-13
       steps:
@@ -81,6 +83,7 @@ jobs:
               ./bin/libremotery_dll_macos.so
               ./bin/libstb_dll_macos.so
               ./bin/libduktape_dll_macos.so
+              ./bin/libcgltf_dll_macos.so
     build-macos-arm64:
       runs-on: macos-latest
       steps:
@@ -102,6 +105,7 @@ jobs:
               ./bin/libremotery_dll_macos_arm64.so
               ./bin/libstb_dll_macos_arm64.so
               ./bin/libduktape_dll_macos_arm64.so
+              ./bin/libcgltf_dll_macos_arm64.so
     build-ios64:
       runs-on: macos-latest
       steps:
@@ -123,6 +127,7 @@ jobs:
               ./bin/libremotery_dll_ios64.so
               ./bin/libstb_dll_ios64.so
               ./bin/libduktape_dll_ios64.so
+              ./bin/libcgltf_dll_iso64.so
     build-android:
       runs-on: ubuntu-latest
       steps:
