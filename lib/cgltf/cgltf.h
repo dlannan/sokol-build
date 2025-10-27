@@ -91,6 +91,9 @@
  * cgltf_extras::data directly instead. You can parse this data using your own JSON parser
  * or, if you've included the cgltf implementation using the integrated JSMN JSON parser.
  */
+
+#ifndef CGLTF_IMPLEMENTATION
+
 #ifndef CGLTF_H_INCLUDED__
 #define CGLTF_H_INCLUDED__
 
@@ -910,6 +913,8 @@ CGLTF_EXPORT cgltf_size cgltf_animation_channel_index(const cgltf_animation* ani
 
 #endif /* #ifndef CGLTF_H_INCLUDED__ */
 
+
+#endif /* #ifndef CGLTF_IMPLEMENTATION */
 /*
  *
  * Stop now, if you are only interested in the API.

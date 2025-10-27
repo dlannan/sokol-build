@@ -27,6 +27,8 @@
  * terminator. If buffer is null, returns the number of bytes that would have
  * been written. `data` is not deallocated.
  */
+#ifndef CGLTF_WRITE_IMPLEMENTATION
+
 #ifndef CGLTF_WRITE_H_INCLUDED__
 #define CGLTF_WRITE_H_INCLUDED__
 
@@ -39,14 +41,16 @@
 extern "C" {
 #endif
 
-cgltf_result cgltf_write_file(const cgltf_options* options, const char* path, const cgltf_data* data);
-cgltf_size cgltf_write(const cgltf_options* options, char* buffer, cgltf_size size, const cgltf_data* data);
+CGLTF_EXPORT cgltf_result cgltf_write_file(const cgltf_options* options, const char* path, const cgltf_data* data);
+CGLTF_EXPORT cgltf_size cgltf_write(const cgltf_options* options, char* buffer, cgltf_size size, const cgltf_data* data);
 
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* #ifndef CGLTF_WRITE_H_INCLUDED__ */
+
+#endif /* CGLTF_WRITE_IMPLEMENTATION */
 
 /*
  *
