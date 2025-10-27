@@ -61,7 +61,7 @@ jobs:
               ./bin/remotery_dll.dll
               ./bin/stb_dll.dll
               ./bin/libduktape_dll.dll
-              ./bin/cgltf_dll.so
+              ./bin/cgltf_dll.dll
     build-macos:
       runs-on: macos-13
       steps:
