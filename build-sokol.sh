@@ -19,16 +19,16 @@ DEFS="-DSOKOL_GLCORE"
 echo "Building for platform ${PLATFORM}"
 
 # Source files. Add to list as needed. If this gets to big. Break up into multiple lists. Simple.
-tgt01=("sokol-dll" "sokol_dll" "-fpic" "-shared -rdynamic")
-tgt02=("sokol-debug-dll" "sokol_debug_dll" "-fpic" "-shared -rdynamic")
-tgt03=("sokol-shape-dll" "sokol_shape_dll" "-fpic" "-shared -rdynamic")
-tgt04=("sokol-nuklear-dll" "sokol_nuklear_dll" "-I./lib/nuklear -fpic" "-shared -rdynamic")
-tgt05=("hmm-dll" "hmm_dll" "-fpic" "-shared -rdynamic")
-tgt06=("remotery-dll" "remotery_dll" "-fpic" "-shared -rdynamic")
-tgt07=("stb-dll" "stb_dll" "-fpic" "-shared -rdynamic")
-tgt08=("sokol-gp-dll" "sokol_gp_dll" "-fpic" "-shared -rdynamic")
-tgt09=("duktape-dll" "duktape_dll" "-fpic" "-shared -rdynamic")
-tgt10=("cgltf-dll" "cgltf_dll" "-fpic" "-shared -rdynamic")
+tgt01=("sokol-dll" "sokol_dll" "-fpic" "-shared -rdynamic" "")
+tgt02=("sokol-debug-dll" "sokol_debug_dll" "-fpic" "-shared -rdynamic" "")
+tgt03=("sokol-shape-dll" "sokol_shape_dll" "-fpic" "-shared -rdynamic" "")
+tgt04=("sokol-nuklear-dll" "sokol_nuklear_dll" "-fpic" "-shared -rdynamic" "-I./lib/nuklear")
+tgt05=("hmm-dll" "hmm_dll" "-fpic" "-shared -rdynamic" "")
+tgt06=("remotery-dll" "remotery_dll" "-fpic" "-shared -rdynamic" "")
+tgt07=("stb-dll" "stb_dll" "-fpic" "-shared -rdynamic" "")
+tgt08=("sokol-gp-dll" "sokol_gp_dll" "-fpic" "-shared -rdynamic" "")
+tgt09=("duktape-dll" "duktape_dll" "-fpic" "-shared -rdynamic" "")
+tgt10=("cgltf-dll" "cgltf_dll" "-fpic" "-shared -rdynamic" "")
 
 TARGET_FILES=(tgt01[@] tgt02[@] tgt03[@] tgt04[@] tgt05[@] tgt06[@] tgt07[@] tgt08[@] tgt09[@] tgt10[@])
 
@@ -36,22 +36,21 @@ TARGET_FILES=(tgt01[@] tgt02[@] tgt03[@] tgt04[@] tgt05[@] tgt06[@] tgt07[@] tgt
 # ----------------------------- BUILD LINUX ---------------------------------
 if [ "${PLATFORM}" = "linux" ]; then
 echo "Linux."
+rm -rf ./bin/*.o
 COMPILE_FLAGS="$COMPILE_FLAGS -lX11 -lXi -lXcursor -lGL -lpthread -lasound"
 
 COUNT=${#TARGET_FILES[@]}
 for ((i=0; i<$COUNT; i++))
 do
     declare -a tgt=(${!TARGET_FILES[i]})
-
     REMOTERY=
     if [ $i == 5 ]
     then
         REMOTERY="./bin/Remotery_linux.o"
         gcc -c ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} ${COMPILE_FLAGS}
     fi
-
-    gcc -c ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}.o ${COMPILE_FLAGS}
-    gcc ${tgt[3]} ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}.so ./bin/lib${tgt[1]}.o ${REMOTERY} ${COMPILE_FLAGS}
+    gcc -c ${BASE_INCLUDE} ${tgt[5]} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}.o 
+    gcc ${tgt[3]} ${tgt[4]} ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}.so ./bin/lib${tgt[1]}.o ${REMOTERY} ${COMPILE_FLAGS}
 done
 
 # ----------------------------- BUILD MACOS ---------------------------------
@@ -72,7 +71,7 @@ do
         g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY}
     fi
 
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_macos.o
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[5]} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_macos.o
     g++ -dynamiclib ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}_macos.so ./bin/lib${tgt[1]}_macos.o ${REMOTERY} ${COMPILE_FLAGS}
 done
 
@@ -93,7 +92,7 @@ do
     REMOTERY="./bin/Remotery_macos_arm64.o"
         g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY}
     fi
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_macos_arm64.o 
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[5]} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_macos_arm64.o 
     g++ -dynamiclib ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}_macos_arm64.so ./bin/lib${tgt[1]}_macos_arm64.o ${REMOTERY} ${COMPILE_FLAGS}
 done
 
@@ -115,7 +114,7 @@ do
     g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} "lib/remotery/Remotery.c" -o ${REMOTERY} 
     fi
 
-    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_ios64.o 
+    g++ -c -xobjective-c++ ${BASE_INCLUDE} ${tgt[5]} ${tgt[2]} ${DEFS} lib/${tgt[0]}.c -o ./bin/lib${tgt[1]}_ios64.o 
     g++ -dynamiclib ${BASE_INLCUDE_LIB} -o ./bin/lib${tgt[1]}_ios64.so ./bin/lib${tgt[1]}_ios64.o ${REMOTERY} ${COMPILE_FLAGS}
 done
 

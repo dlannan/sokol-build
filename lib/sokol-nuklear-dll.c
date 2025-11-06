@@ -38,6 +38,8 @@
 #if defined(_MSC_VER)
 #pragma warning(disable:4996)   // sprintf,fopen,localtime: This function or variable may be unsafe
 #endif
+
+#define NK_SINGLE_FILE
 #include "nuklear.h"
 
 #define SOKOL_NUKLEAR_IMPL
